@@ -44,7 +44,6 @@ class WaterHeader: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = .white
         addSubview(titleLabel)
         addSubview(leftButton)
         addSubview(rightButton)

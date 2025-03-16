@@ -23,7 +23,7 @@ class HomeViewController: BaseViewController {
         
     }
     
-    @MainActor required init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -93,9 +93,25 @@ extension HomeViewController: UICollectionViewDataSource {
     
     
 }
+
 // Mark: CollectionView delegate
 extension HomeViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case HomeSectionType.category.rawValue:
+            if let category = viewModel.getSectionData()[indexPath.section].items[indexPath.row] as? HomeCategory {
+                switch category {
+                case .bills:
+                    let vc = LoginViewController()
+                    navigationController?.pushViewController(vc, animated: true)
+                default:
+                    break
+                }
+            }
+        default:
+            break
+        }
+    }
 }
 
 // Mark: CollectionView flow layout

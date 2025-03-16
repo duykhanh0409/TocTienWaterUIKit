@@ -51,7 +51,7 @@ class BaseViewController: UIViewController {
     }
     
     func configureHeader(
-        title: String,
+        title: String? = nil,
         leftButtonIcon: UIImage? = nil,
         rightButtonIcon: UIImage? = nil,
         showLeftButton: Bool = true,
@@ -59,7 +59,7 @@ class BaseViewController: UIViewController {
         leftButtonAction: (() -> Void)? = nil,
         rightButtonAction: (() -> Void)? = nil
     ) {
-        customHeaderView.setTitle(title)
+        customHeaderView.setTitle(title ?? "")
         customHeaderView.setLeftButtonIcon(leftButtonIcon)
         customHeaderView.setRightButtonIcon(rightButtonIcon)
         customHeaderView.setLeftButtonHidden(!showLeftButton)
