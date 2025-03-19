@@ -14,6 +14,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var loginButton: TocTienButton!
     @IBOutlet weak var customerPhoneTextField: TocTienWaterTextField!
     @IBOutlet weak var customerCodeTextField: TocTienWaterTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()

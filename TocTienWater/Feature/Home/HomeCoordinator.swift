@@ -5,10 +5,9 @@
 //  Created by Nhat on 3/9/25.
 //
 
-import Foundation
-
+import UIKit
 final class HomeCoordinator: BaseCoordinator {
-    
+    var slideMenuVC: SlideMenuViewController?
     override func start() {
         let homeViewController = HomeViewController(viewModel: HomeViewModel())
         homeViewController.coordinator = self
@@ -20,5 +19,14 @@ final class HomeCoordinator: BaseCoordinator {
         let detailCoordinator = BillsCoordinator(navigationController: self.navigationController)
         addChild(detailCoordinator)
         detailCoordinator.start()
+    }
+    
+    public func showSlideMenu(from viewControllerToPresent: UIViewController) {
+        let slideMenuVC = SlideMenuViewController()
+        slideMenuVC.modalPresentationStyle = .overCurrentContext
+        self.slideMenuVC = slideMenuVC
+        viewControllerToPresent.present(slideMenuVC, animated: false) { [weak self] in
+            self?.slideMenuVC?.showMenu()
+        }
     }
 }

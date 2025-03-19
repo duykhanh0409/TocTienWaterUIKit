@@ -29,22 +29,36 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: need move string to constant
-        configureHeader(title: "Xin chào")
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.registerCellWithNib(InfoCollectionViewCell.self)
-        collectionView.registerCell(CategoryCollectionViewCell.self)
+        setupUI()
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize // Tự động ước lượng kích thước
-            flowLayout.minimumLineSpacing = 10 // Khoảng cách giữa các cell (tùy chọn)
-            flowLayout.minimumInteritemSpacing = 10 // Khoảng cách giữa các item
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            flowLayout.minimumLineSpacing = 10
+            flowLayout.minimumInteritemSpacing = 10
             flowLayout.sectionInset = .init(top: 10, left: 8, bottom: 10, right: 8)
         }
         setBinding()
         viewModel.fetchData()
     }
     
+    
+    private func setupUI() {
+        // TODO: need move string to constant
+        configureHeader(title: "Xin chào",
+                        leftButtonIcon: "list.dash",
+                        leftButtonAction: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.coordinator?.showSlideMenu(from: self)
+        })
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.registerCellWithNib(InfoCollectionViewCell.self)
+        collectionView.registerCell(CategoryCollectionViewCell.self)
+        collectionView.register(HomeHeaderSectionView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: "HomeHeaderSectionView")
+    }
     
     private func setBinding() {
         viewModel.dataSourcePublisher
@@ -91,7 +105,37 @@ extension HomeViewController: UICollectionViewDataSource {
         
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                           layout collectionViewLayout: UICollectionViewLayout,
+                           referenceSizeForHeaderInSection section: Int) -> CGSize {
+            return CGSize(width: collectionView.frame.width, height: 24) // Chiều cao tùy chỉnh
+        }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "HomeHeaderSectionView",
+            for: indexPath) as? HomeHeaderSectionView {
+            var title: String = ""
+            switch indexPath.section {
+            case 1:
+                title = "CÁC DỊCH VỤ"
+            case 2:
+                title = "TRẠNG THÁI HỒ SƠ"
+            default:
+                break
+            
+            }
+            if title != "" {
+                headerView.configHeader(with: title,
+                                        font: .systemFont(ofSize: 14, weight: .semibold),
+                                        textColor: .black)
+            }
+            return headerView
+        }
+        
+        return UICollectionReusableView()
+    }
 }
 
 // Mark: CollectionView delegate

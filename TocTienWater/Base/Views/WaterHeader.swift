@@ -14,7 +14,7 @@ class WaterHeader: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -22,12 +22,14 @@ class WaterHeader: UIView {
     private let leftButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
         return button
     }()
     
     private let rightButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
         return button
     }()
     
@@ -55,7 +57,7 @@ class WaterHeader: UIView {
     // Thiết lập constraints
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             leftButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             leftButton.widthAnchor.constraint(equalToConstant: 44),
             leftButton.heightAnchor.constraint(equalToConstant: 44),

@@ -10,7 +10,12 @@ import UIKit
 class BaseViewController: UIViewController {
     
     init() {
-        super.init(nibName: String(describing: type(of: self)), bundle: nil)
+        let nibName = String(describing: type(of: self))
+        if Bundle.main.path(forResource: nibName, ofType: "nib") != nil {
+            super.init(nibName: nibName, bundle: nil)
+        } else {
+            super.init(nibName: nil, bundle: nil)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +57,7 @@ class BaseViewController: UIViewController {
     
     func configureHeader(
         title: String? = nil,
-        leftButtonIcon: UIImage? = nil,
+        leftButtonIcon: String? = nil,
         rightButtonIcon: UIImage? = nil,
         showLeftButton: Bool = true,
         showRightButton: Bool = false,
@@ -60,7 +65,7 @@ class BaseViewController: UIViewController {
         rightButtonAction: (() -> Void)? = nil
     ) {
         customHeaderView.setTitle(title ?? "")
-        customHeaderView.setLeftButtonIcon(leftButtonIcon)
+        customHeaderView.setLeftButtonIcon(UIImage(systemName: leftButtonIcon ?? ""))
         customHeaderView.setRightButtonIcon(rightButtonIcon)
         customHeaderView.setLeftButtonHidden(!showLeftButton)
         customHeaderView.setRightButtonHidden(!showRightButton)
