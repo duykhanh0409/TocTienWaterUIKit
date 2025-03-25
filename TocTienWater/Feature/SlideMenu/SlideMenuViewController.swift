@@ -29,7 +29,8 @@ class SlideMenuViewController: UIViewController {
         let view = InfoView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.configView(icon: "enter_icon",
-                        title: "Đăng Nhập")
+                        title: "Đăng Nhập",
+                        type: .slideMenu)
         return view
     }()
     
@@ -114,7 +115,7 @@ extension SlideMenuViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             let cell = tableView.dequeueCell(InfoSlideMenuTableViewCell.self, for: indexPath)
             cell.selectionStyle = .none
-            cell.configView(with: "building.2",
+            cell.configCell(icon: "building.2",
                             title: "Ấp 6, Xã Tóc Tiên, Thị xã Phú Mỹ\nBà Rịa - Vũng Tàu")
             return cell
             

@@ -22,6 +22,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
         label.textColor = .label
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false // Add this
         return label
     }()
     
@@ -52,7 +53,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         setupConstraints()
     }
     
-    
     private func setupUI() {
         containerImageView.addSubview(imageView)
         stackView.addArrangedSubview(containerImageView)
@@ -64,22 +64,28 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
+        // Fix stackView constraints to use leading/trailing instead of width
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            stackView.widthAnchor.constraint(equalToConstant: contentView.bounds.width * 0.8)
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
         ])
+        
+        // Fix containerImageView constraints
         NSLayoutConstraint.activate([
-            containerImageView.widthAnchor.constraint(equalToConstant: stackView.bounds.width),
-            containerImageView.heightAnchor.constraint(equalToConstant: 44)
+            containerImageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 1),
+            containerImageView.heightAnchor.constraint(equalTo: containerImageView.widthAnchor)// Scale relative to cell width
         ])
+        
+        // Update imageView constraints to scale with container
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 28),
-            imageView.widthAnchor.constraint(equalToConstant: 28),
-            imageView.centerYAnchor.constraint(equalTo: containerImageView.centerYAnchor),
-            imageView.centerXAnchor.constraint(equalTo: containerImageView.centerXAnchor)
+            imageView.topAnchor.constraint(equalTo: containerImageView.topAnchor, constant: 8),
+            imageView.bottomAnchor.constraint(equalTo: containerImageView.bottomAnchor, constant: -8),
+            imageView.leadingAnchor.constraint(equalTo: containerImageView.leadingAnchor, constant: 8),
+            imageView.trailingAnchor.constraint(equalTo: containerImageView.trailingAnchor, constant: -8),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor) // Keep aspect ratio 1:1
         ])
-            
     }
     
     func configCell(with category: HomeCategory) {

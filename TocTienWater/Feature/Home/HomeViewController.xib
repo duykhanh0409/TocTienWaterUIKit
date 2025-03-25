@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="125" width="393" height="693"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dxG-3f-zpo">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="693"/>
+                            <rect key="frame" x="8" y="0.0" width="377" height="693"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zIi-Jz-6Gp">
                                 <size key="itemSize" width="128" height="128"/>
@@ -39,8 +39,8 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="dxG-3f-zpo" secondAttribute="bottom" id="Ohd-Fn-yOp"/>
                         <constraint firstItem="dxG-3f-zpo" firstAttribute="top" secondItem="7g7-lO-r2r" secondAttribute="top" id="RjH-PW-gLp"/>
-                        <constraint firstItem="dxG-3f-zpo" firstAttribute="leading" secondItem="7g7-lO-r2r" secondAttribute="leading" id="Whf-6R-SDV"/>
-                        <constraint firstAttribute="trailing" secondItem="dxG-3f-zpo" secondAttribute="trailing" id="bLh-BT-rMJ"/>
+                        <constraint firstItem="dxG-3f-zpo" firstAttribute="leading" secondItem="7g7-lO-r2r" secondAttribute="leading" constant="8" id="Whf-6R-SDV"/>
+                        <constraint firstAttribute="trailing" secondItem="dxG-3f-zpo" secondAttribute="trailing" constant="8" id="bLh-BT-rMJ"/>
                     </constraints>
                 </view>
             </subviews>

@@ -21,6 +21,13 @@ final class HomeCoordinator: BaseCoordinator {
         detailCoordinator.start()
     }
     
+    public func gotoIntroduceVC() {
+        self.removeChild(ofType: IntroduceCoordinator.self)
+        let introduceCoordinator = IntroduceCoordinator(navigationController: self.navigationController)
+        addChild(introduceCoordinator)
+        introduceCoordinator.start()
+    }
+    
     public func showSlideMenu(from viewControllerToPresent: UIViewController) {
         let slideMenuVC = SlideMenuViewController()
         slideMenuVC.modalPresentationStyle = .overCurrentContext

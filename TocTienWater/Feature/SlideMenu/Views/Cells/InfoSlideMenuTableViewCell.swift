@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum TypeInfoView {
+    case slideMenu
+    case intro
+}
+
 class InfoView: UIView {
     private let containerIconView: UIView = {
         let view = UIView()
@@ -40,22 +45,41 @@ class InfoView: UIView {
         return stackView
     }()
     
+    private let actionButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        return button
+    }()
+    
+    private var actionButtonHandler: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupConstraints()
+        actionButton.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
         setupConstraints()
+        actionButton.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
+    }
+    
+    @objc
+    private func handleActionButtonTap() {
+        if let actionButtonHandler = actionButtonHandler {
+            actionButtonHandler()
+        }
     }
     
     private func setupUI() {
         self.containerIconView.addSubview(iconImageView)
         containerStackView.addArrangedSubview(containerIconView)
         containerStackView.addArrangedSubview(titleLabel)
+        containerStackView.addArrangedSubview(actionButton)
         addSubview(containerStackView)
     }
     
@@ -76,16 +100,43 @@ class InfoView: UIView {
             containerIconView.widthAnchor.constraint(equalTo: containerStackView.heightAnchor),
             containerIconView.heightAnchor.constraint(equalTo: containerStackView.heightAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            actionButton.widthAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5),
+            actionButton.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5)
+        ])
     }
     
     
     func configView(icon iconName: String? = nil,
-                    title: String) {
+                    title: String,
+                    iconButton: String? = nil,
+                    type: TypeInfoView,
+                    rightButtonAction:(() -> Void)? = nil) {
         if let image = UIImage(named: iconName ?? "") {
             iconImageView.image = image
         } else {
             iconImageView.image = UIImage(systemName: iconName ?? "")
         }
+        
+        if let imageButton = UIImage(named: iconButton ?? "") {
+            actionButton.setImage(imageButton, for: .normal)
+        } else {
+            let image = UIImage(systemName: iconButton ?? "")
+            actionButton.setImage(image, for: .normal)
+        }
+        
+        switch type {
+        case .intro:
+            titleLabel.textColor = .black
+            iconImageView.tintColor = .appColor
+            actionButton.tintColor = .appColor
+            actionButton.isHidden = false
+        default:
+            break
+        }
+        
+        self.actionButtonHandler = rightButtonAction
         
         titleLabel.text = title
     }
@@ -124,9 +175,14 @@ class InfoSlideMenuTableViewCell: UITableViewCell {
         ])
     }
     
-    func configView(with iconName: String? = nil,
-                    title: String) {
+    func configCell(icon iconName: String? = nil,
+                    title: String,
+                    iconButton: String? = nil,
+                    type: TypeInfoView = .slideMenu,
+                    rightButtonAction:(() -> Void)? = nil) {
         infoView.configView(icon: iconName,
-                            title: title)
+                            title: title,
+                            iconButton: iconButton,
+                            type: type)
     }
 }

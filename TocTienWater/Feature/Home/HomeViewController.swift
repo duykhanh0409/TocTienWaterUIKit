@@ -30,12 +30,6 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            flowLayout.minimumLineSpacing = 10
-            flowLayout.minimumInteritemSpacing = 10
-            flowLayout.sectionInset = .init(top: 10, left: 8, bottom: 10, right: 8)
-        }
         setBinding()
         viewModel.fetchData()
     }
@@ -148,6 +142,8 @@ extension HomeViewController: UICollectionViewDelegate {
                 case .bills:
                     let vc = LoginViewController()
                     navigationController?.pushViewController(vc, animated: true)
+                case .intro:
+                    coordinator?.gotoIntroduceVC()
                 default:
                     break
                 }
@@ -164,6 +160,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         var width = collectionView.frame.width - 20
         var height: CGFloat = 50
         switch indexPath.section {
+        case 0:
+            width = collectionView.frame.width
+            height = 116
         case 1:
             width = (collectionView.frame.width - 20 - (10 * 2)) / 3
             height = 1.2 * width
@@ -171,5 +170,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             break
         }
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
 }
