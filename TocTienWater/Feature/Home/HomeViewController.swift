@@ -12,7 +12,6 @@ class HomeViewController: BaseViewController {
     // Mark: Variable
     weak var coordinator: HomeCoordinator?
     let viewModel: HomeViewModelProtocol
-    private var cancellables = Set<AnyCancellable>()
     // Mark: Outlet
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -144,6 +143,8 @@ extension HomeViewController: UICollectionViewDelegate {
                     navigationController?.pushViewController(vc, animated: true)
                 case .intro:
                     coordinator?.gotoIntroduceVC()
+                case .stats:
+                    coordinator?.goToRegister()
                 default:
                     break
                 }
@@ -162,9 +163,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         switch indexPath.section {
         case 0:
             width = collectionView.frame.width
-            height = 116
+            height = 140
         case 1:
-            width = (collectionView.frame.width - 20 - (10 * 2)) / 3
+            width = (collectionView.frame.width - 20 - (10 * 3)) / 3
             height = 1.2 * width
         default:
             break

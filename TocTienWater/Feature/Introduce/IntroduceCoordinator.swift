@@ -10,7 +10,7 @@ import Foundation
 final class IntroduceCoordinator: BaseCoordinator {
     
     override func start() {
-        let introduceVC = IntroduceViewController()
+        let introduceVC = IntroduceViewController(viewModel: IntroduceViewModel())
         introduceVC.coordinator = self
         navigationController.pushViewController(introduceVC, animated: true)
     }

@@ -40,13 +40,14 @@ class InfoView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.alignment = .center
         stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     private let actionButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         return button
@@ -95,15 +96,15 @@ class InfoView: UIView {
         NSLayoutConstraint.activate([
             iconImageView.centerXAnchor.constraint(equalTo: containerIconView.centerXAnchor),
             iconImageView.centerYAnchor.constraint(equalTo: containerIconView.centerYAnchor),
-            iconImageView.widthAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5),
-            iconImageView.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5),
+            iconImageView.widthAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.8),
+            iconImageView.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.8),
             containerIconView.widthAnchor.constraint(equalTo: containerStackView.heightAnchor),
             containerIconView.heightAnchor.constraint(equalTo: containerStackView.heightAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            actionButton.widthAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5),
-            actionButton.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.5)
+            actionButton.widthAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.8),
+            actionButton.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.8)
         ])
     }
     
@@ -183,6 +184,18 @@ class InfoSlideMenuTableViewCell: UITableViewCell {
         infoView.configView(icon: iconName,
                             title: title,
                             iconButton: iconButton,
-                            type: type)
+                            type: type,
+                            rightButtonAction: rightButtonAction)
     }
+    
+    func configCell(with type: IntroduceType,
+                    typeView: TypeInfoView = .slideMenu,
+                    rightButtonAction: (() -> Void)? = nil) {
+        infoView.configView(icon: type.iconName,
+                            title: type.title,
+                            iconButton: type.actionIconName,
+                            type: typeView,
+                            rightButtonAction: rightButtonAction)
+    }
+                    
 }

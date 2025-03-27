@@ -36,4 +36,12 @@ final class HomeCoordinator: BaseCoordinator {
             self?.slideMenuVC?.showMenu()
         }
     }
+    
+    public func goToRegister() {
+        self.removeChild(ofType: RegisterCoordinator.self)
+        let registerCoordinator = RegisterCoordinator(navigationController: self.navigationController)
+        addChild(registerCoordinator)
+        registerCoordinator.start()
+    }
+    
 }

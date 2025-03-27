@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Combine
 
 class BaseViewController: UIViewController {
-    
+    var cancellables = Set<AnyCancellable>()
     init() {
         let nibName = String(describing: type(of: self))
         if Bundle.main.path(forResource: nibName, ofType: "nib") != nil {

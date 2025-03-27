@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController()
         self.appCoordinator = AppCoordinator(navigationController: navigationController)
         self.appCoordinator?.start()
+        if #available(iOS 13.0, *) {
+            window.overrideUserInterfaceStyle = .light // Hoặc .dark nếu bạn muốn màu nền tối
+        }
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
