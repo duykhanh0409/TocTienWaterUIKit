@@ -9,25 +9,39 @@ import UIKit
 
 class BillsViewController: BaseViewController {
     weak var coordinator: BillsCoordinator?
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        showHeader(true)
-        configureHeader(title: "thoi nao", leftButtonAction: {
+        setupUI()
+    }
+    
+    private func setupUI() {
+        configureHeader(title: "Hoá đơn", leftButtonAction: {
             self.navigationController?.popViewController(animated: true)
         })
+        
+        tableView.registerCell(BillTableViewCell.self)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
+    
+}
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+// Mark: TableViewDataSource and Delegate
+extension BillsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueCell(BillTableViewCell.self, for: indexPath)
+        cell.configCell(day: "20", month: "11", money: 450000, fromValue: 0, toValue: 5)
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
 }

@@ -62,7 +62,7 @@ class RegisterViewController: BaseViewController {
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
-        UIApplication.shared.keyWindow?.rootViewController?.present(picker, animated: true, completion: nil)
+        self.present(picker, animated: true, completion: nil)
     }
     
     private func openCamera() {
@@ -71,7 +71,7 @@ class RegisterViewController: BaseViewController {
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
             imagePicker.allowsEditing = true
-            UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         } else {
             print("Camera not available")
         }

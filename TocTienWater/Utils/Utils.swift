@@ -85,4 +85,22 @@ final class Utils {
             break
         }
     }
+    
+    
+    func formatNumber<T: Numeric>(_ value: T) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.maximumFractionDigits = 0
+        
+        if let doubleValue = value as? Double {
+            return formatter.string(from: NSNumber(value: doubleValue)) ?? "\(value)"
+        } else if let floatValue = value as? Float {
+            return formatter.string(from: NSNumber(value: floatValue)) ?? "\(value)"
+        } else if let intValue = value as? Int {
+            return formatter.string(from: NSNumber(value: intValue)) ?? "\(value)"
+        } else {
+            return "\(value)"
+        }
+    }
 }

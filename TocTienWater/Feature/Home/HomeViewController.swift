@@ -139,8 +139,7 @@ extension HomeViewController: UICollectionViewDelegate {
             if let category = viewModel.getSectionData()[indexPath.section].items[indexPath.row] as? HomeCategory {
                 switch category {
                 case .bills:
-                    let vc = LoginViewController()
-                    navigationController?.pushViewController(vc, animated: true)
+                    coordinator?.goToBillVc()
                 case .intro:
                     coordinator?.gotoIntroduceVC()
                 case .stats:

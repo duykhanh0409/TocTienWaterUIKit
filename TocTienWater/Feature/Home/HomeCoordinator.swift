@@ -44,4 +44,11 @@ final class HomeCoordinator: BaseCoordinator {
         registerCoordinator.start()
     }
     
+    
+    public func goToBillVc() {
+        self.removeChild(ofType: BillsCoordinator.self)
+        let billsCoordinator = BillsCoordinator(navigationController: self.navigationController)
+        addChild(billsCoordinator)
+        billsCoordinator.start()
+    }
 }
