@@ -39,6 +39,20 @@ final class HomeViewModel: HomeViewModelProtocol {
     
     func fetchData() {
         dataSourceSubject.send(.loading)
+        //        NetworkService.shared.request(HomeAPIEndPoint.getImage(pageIndex: 0, limit: 100),
+        //                                      responseType: FakeResponse.self)
+        //        .sink { completion in
+        //            switch completion {
+        //            case .finished:
+        //                print("Hoàn thành")
+        //            case .failure(let error):
+        //                print("Lỗi: \(error)")
+        //            }
+        //        } receiveValue: { response in
+        //            // do something
+        //            // reload UI in here
+        //        }.store(in: &cancellables)
+        
         let mockData = HomeSectionType.allCases.map { type in
             switch type {
             case .info:
@@ -62,8 +76,6 @@ final class HomeViewModel: HomeViewModelProtocol {
             }
         }
         dataSourceSubject.send(.loaded(mockData))
-        
-        
     }
     
     func refeshFileState() {

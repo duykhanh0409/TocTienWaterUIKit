@@ -52,3 +52,8 @@ struct FileStateItem {
     let status: String
     let date: String
 }
+
+
+struct FakeResponse: Codable {
+    let title: String
+}

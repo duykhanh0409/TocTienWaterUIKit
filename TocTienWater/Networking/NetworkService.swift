@@ -27,7 +27,8 @@ enum NetworkError: Error {
 // MARK: - Protocols
 protocol NetworkServiceProtocol {
     func request<T: Decodable>(
-        _ router: EndPointType) -> AnyPublisher<T, Error>
+        _ router: EndPointType,
+        responseType: T.Type) -> AnyPublisher<T, Error>
     
 
     func requestRawData(
@@ -51,7 +52,8 @@ class NetworkService: NetworkServiceProtocol {
     }
 
     // MARK: - Request with Decoding
-    func request<T: Decodable>(_ router: EndPointType) -> AnyPublisher<T, Error> {
+    func request<T: Decodable>(_ router: EndPointType,
+                               responseType: T.Type) -> AnyPublisher<T, Error> {
         do {
             let urlRequest = try self.buildRequest(from: router)
             
