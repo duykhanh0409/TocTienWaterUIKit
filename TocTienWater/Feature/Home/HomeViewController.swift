@@ -144,8 +144,8 @@ extension HomeViewController: UICollectionViewDelegate {
                     coordinator?.gotoIntroduceVC()
                 case .stats:
                     coordinator?.goToRegister()
-                default:
-                    break
+                case .settings:
+                    coordinator?.goToWaterPrice()
                 }
             }
         default:

@@ -63,7 +63,7 @@ class WaterHeader: UIView {
             leftButton.heightAnchor.constraint(equalToConstant: 44),
             
             rightButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            rightButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            rightButton.centerYAnchor.constraint(equalTo: leftButton.centerYAnchor),
             rightButton.widthAnchor.constraint(equalToConstant: 44),
             rightButton.heightAnchor.constraint(equalToConstant: 44)
         ])

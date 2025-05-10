@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,42 +19,39 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNa-WR-ZU1">
-                        <rect key="frame" x="8" y="8" width="42" height="21"/>
+                        <rect key="frame" x="8" y="8" width="42" height="65"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-VX-67Y">
-                        <rect key="frame" x="8" y="33" width="304" height="57"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bzx-9B-2WV">
-                        <rect key="frame" x="8" y="94" width="304" height="1"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3f-Hj-vBd" customClass="TocTienWaterTextField" customModule="TocTienWater" customModuleProvider="target">
+                        <rect key="frame" x="8" y="77" width="304" height="30"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="Bdm-pe-PWM"/>
+                            <constraint firstAttribute="height" constant="30" id="C7Q-b6-koc"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bzx-9B-2WV" firstAttribute="top" secondItem="lfv-VX-67Y" secondAttribute="bottom" constant="4" id="00h-63-s1J"/>
                     <constraint firstItem="RNa-WR-ZU1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Bxf-87-HPb"/>
-                    <constraint firstAttribute="trailing" secondItem="lfv-VX-67Y" secondAttribute="trailing" constant="8" id="IhN-9V-Wkh"/>
-                    <constraint firstItem="lfv-VX-67Y" firstAttribute="top" secondItem="RNa-WR-ZU1" secondAttribute="bottom" constant="4" id="W7t-kN-kvz"/>
-                    <constraint firstAttribute="bottom" secondItem="bzx-9B-2WV" secondAttribute="bottom" constant="16" id="WC2-t8-Bth"/>
-                    <constraint firstItem="lfv-VX-67Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="eNA-mf-oU3"/>
+                    <constraint firstAttribute="trailing" secondItem="n3f-Hj-vBd" secondAttribute="trailing" constant="8" id="LyY-QI-Rdi"/>
+                    <constraint firstItem="n3f-Hj-vBd" firstAttribute="top" secondItem="RNa-WR-ZU1" secondAttribute="bottom" constant="4" id="Y6o-Iy-vib"/>
                     <constraint firstItem="RNa-WR-ZU1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="fDb-DQ-XHo"/>
-                    <constraint firstItem="bzx-9B-2WV" firstAttribute="trailing" secondItem="lfv-VX-67Y" secondAttribute="trailing" id="gwq-R0-QCK"/>
-                    <constraint firstItem="bzx-9B-2WV" firstAttribute="leading" secondItem="lfv-VX-67Y" secondAttribute="leading" id="xuy-AP-4Db"/>
+                    <constraint firstAttribute="bottom" secondItem="n3f-Hj-vBd" secondAttribute="bottom" constant="4" id="hdG-vP-NNH"/>
+                    <constraint firstItem="n3f-Hj-vBd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="mSr-yX-Tfn"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="textField" destination="lfv-VX-67Y" id="kJw-vy-Mdy"/>
+                <outlet property="textField" destination="n3f-Hj-vBd" id="lrD-4P-VTA"/>
                 <outlet property="titleLabel" destination="RNa-WR-ZU1" id="iMc-wG-vzE"/>
             </connections>
             <point key="canvasLocation" x="25.954198473282442" y="12.323943661971832"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -58,7 +58,7 @@ class RegisterViewController: BaseViewController {
     private func openImagePicker() {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
-        configuration.selectionLimit = 1
+        configuration.selectionLimit = 0
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
@@ -81,19 +81,19 @@ class RegisterViewController: BaseViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.view.tintColor = UIColor(hexString: "#2B6469")
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
-            self?.openCamera()
+            self?.checkCameraPermission()
         }
-
+        
         let galleryAction = UIAlertAction(title: "Gallery", style: .default) { [weak self] _ in
             self?.openImagePicker()
         }
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alertController.addAction(cameraAction)
         alertController.addAction(galleryAction)
         alertController.addAction(cancelAction)
-
+        
         if let cameraImage = UIImage(systemName: "camera")?.withRenderingMode(.alwaysTemplate) {
             cameraAction.setValue(cameraImage, forKey: "image")
         }
@@ -102,9 +102,41 @@ class RegisterViewController: BaseViewController {
             galleryAction.setValue(galleryImage, forKey: "image")
         }
         
-        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-            viewController.present(alertController, animated: true)
+        self.present(alertController, animated: true)
+    }
+    
+    func checkCameraPermission() {
+        let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch cameraAuthorizationStatus {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    DispatchQueue.main.async {
+                        self.openCamera()
+                    }
+                } else {
+                    print("Camera access denied")
+                }
+            }
+        case .restricted, .denied:
+            showAlertForSettings()
+        case .authorized:
+            openCamera()
+        @unknown default:
+            break
         }
+    }
+    
+    func showAlertForSettings() {
+        let alert = UIAlertController(title: "Camera Access", message: "Ứng dụng cần quyền truy cập camera. Hãy vào phần Cài đặt để cấp quyền.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Hủy", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cài đặt", style: .default) { _ in
+            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+            }
+        })
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -179,7 +211,6 @@ extension RegisterViewController: RadioButtonCellDelegate {
     }
 }
 
-
 // MARK: - RegisterTextFieldCellDelegate
 extension RegisterViewController: RegisterTextFieldCellDelegate {
     func endEditing(text: String, inputType: InputType?) {
@@ -227,19 +258,30 @@ extension RegisterViewController: RegisterImageCellDelegate {
 extension RegisterViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
-        
-        guard let result = results.first else { return }
-        result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
-            guard let image = image as? UIImage else { return }
-            DispatchQueue.main.async {
-                self?.handleSelectedImage(image)
+        var selectedImages: [UIImage] = []
+        for result in results {
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
+                    guard let self = self else { return }
+                    
+                    if let image = object as? UIImage {
+                        DispatchQueue.main.async {
+                            selectedImages.append(image)
+                            if selectedImages.count == results.count {
+                                self.handleSelectedImage(selectedImages)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
     
-    private func handleSelectedImage(_ image: UIImage) {
+    private func handleSelectedImage(_ images: [UIImage]) {
         if let type = type {
-            self.viewModel.insertImageSelected(type: type, image: image)
+            for item in images {
+                self.viewModel.insertImageSelected(type: type, image: item)
+            }
             tableView.reloadData()
         }
     }
@@ -250,9 +292,9 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         if let selectedImage = info[.editedImage] as? UIImage {
-            handleSelectedImage(selectedImage)
+            handleSelectedImage([selectedImage])
         } else if let originalImage = info[.originalImage] as? UIImage {
-            handleSelectedImage(originalImage)
+            handleSelectedImage([originalImage])
         }
     }
     

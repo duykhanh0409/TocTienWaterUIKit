@@ -2,7 +2,7 @@
 //  String+Ext.swift
 //  TocTienWater
 //
-//  Created by Tuan Bui Minh (SDC11) on 19/3/25.
+//  Created by Bui Tuan on 19/3/25.
 //
 
 import Foundation

@@ -14,7 +14,7 @@ protocol RegisterTextFieldCellDelegate: AnyObject {
 class RegisterTextFieldCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TocTienWaterTextField!
     weak var delegate: RegisterTextFieldCellDelegate?
     var inputType: InputType?
     
@@ -25,7 +25,7 @@ class RegisterTextFieldCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.textField.text = ""
+        self.textField.setText(with: "")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,22 +38,22 @@ class RegisterTextFieldCell: UITableViewCell {
         self.inputType = inputType
         switch inputType {
         case .fullName:
-            self.textField.text = registerData.fullName
+            self.textField.setText(with: registerData.fullName)
         case .installationAddress:
-            self.textField.text = registerData.installationAddress
+            self.textField.setText(with: registerData.installationAddress)
         case .phoneNumber:
-            self.textField.text = registerData.phoneNumber
+            self.textField.setText(with: registerData.phoneNumber)
         case .email:
-            self.textField.text = registerData.email
+            self.textField.setText(with: registerData.email)
         case .representativeName:
-            self.textField.text = registerData.representativeName
+            self.textField.setText(with: registerData.representativeName)
         case .contactAddress:
-            self.textField.text = registerData.contactAddress
+            self.textField.setText(with: registerData.contactAddress)
         }
     }
 }
 
-extension RegisterTextFieldCell: UITextFieldDelegate {
+extension RegisterTextFieldCell: TocTienWaterTextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text {
             delegate?.endEditing(text: text, inputType: inputType)

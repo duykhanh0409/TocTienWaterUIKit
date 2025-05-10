@@ -51,4 +51,11 @@ final class HomeCoordinator: BaseCoordinator {
         addChild(billsCoordinator)
         billsCoordinator.start()
     }
+    
+    public func goToWaterPrice() {
+        self.removeChild(ofType: WaterPriceCoordinator.self)
+        let waterPriceCoordinator = WaterPriceCoordinator(navigationController: self.navigationController)
+        addChild(waterPriceCoordinator)
+        waterPriceCoordinator.start()
+    }
 }

@@ -9,6 +9,12 @@ import UIKit
 
 protocol TocTienWaterTextFieldDelegate: AnyObject {
     func textFieldDidBeginEditing(_ textField: TocTienWaterTextField)
+    func textFieldDidEndEditing(_ textField: UITextField)
+}
+
+extension TocTienWaterTextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: TocTienWaterTextField){}
+    func textFieldDidEndEditing(_ textField: UITextField) {}
 }
 
 final class TocTienWaterTextField: UIView {
@@ -123,6 +129,7 @@ final class TocTienWaterTextField: UIView {
         textFieldStackView.addArrangedSubview(placeHolderLabel)
         textFieldStackView.addArrangedSubview(textField)
         textField.isHidden = true
+        textField.delegate = self
         contentStackView.addArrangedSubview(containerIconView)
         contentStackView.addArrangedSubview(textFieldStackView)
         
@@ -177,6 +184,12 @@ final class TocTienWaterTextField: UIView {
         }
     }
     
+    func setText(with text: String?) {
+        self.containerIconView.isHidden = true
+        self.placeHolderLabel.isHidden = true
+        self.textField.text = text
+    }
+    
     func setTextFieldDisable() {
         placeHolderLabel.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
@@ -189,5 +202,12 @@ final class TocTienWaterTextField: UIView {
         UIView.animate(withDuration: 0.1) {
             self.layoutIfNeeded()
         }
+    }
+}
+
+extension TocTienWaterTextField: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textFieldDidEndEditing(textField)
+        self.sepratorView.backgroundColor = .black
     }
 }
