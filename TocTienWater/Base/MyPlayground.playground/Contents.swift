@@ -41,6 +41,40 @@ pet = nil // trước tiên pet = nil là count -1 đi, 2-1 còn 1 reference thu
 
 
 
-let add: (Int, Int) -> Int = {(a,c) in
-    a + c
+
+
+
+let add = {(a:Int, b: Int) -> Int in return a+b}
+let added = { (a:Double, b:Double) in a + b }
+
+
+func greetFunc(name: String) {
+    print("Hello, \(name)")
 }
+
+
+
+struct Counter {
+    var value: Int = 0
+    
+    mutating func increment() {
+        value += 1
+    }
+}
+
+
+struct Person2 {
+    var name: String
+    var age: Int
+}
+
+let person2 = Person2(name: "khanh", age: 25)
+
+let nameKeypath = \Person2.name
+
+let nameValue = person2[keyPath: nameKeypath]
+
+print(nameValue)
+
+var dictionary: Dictionary<String, Int> = [:]
+
